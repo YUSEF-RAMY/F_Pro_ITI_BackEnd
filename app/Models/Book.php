@@ -9,13 +9,14 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 class Book extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'title',
         'description',
         'author',
         'published_year',
         'quantity',
+        'imagePath',
     ];
 
     public function borrows()
