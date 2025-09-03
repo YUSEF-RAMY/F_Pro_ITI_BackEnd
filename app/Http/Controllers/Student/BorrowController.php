@@ -21,19 +21,19 @@ class BorrowController extends Controller
         if ($book->quantity < 1) {
             return redirect()->back()->with('error', 'Book is not available for borrowing.');
         }
-        $book->validate([
-            'book_id' => 'required|exists:books,id',
-        ]);
 
         Borrow::create([
             'user_id' => Auth::id(),
-            'book_id',
+            'book_id' => $book->id,
             'borrow_date' => now(),
             'status' => 'borrowed',
         ]);
+
         $book->decrement('quantity');
+
         return redirect()->route('borrows.index')->with('success', 'Book borrowed successfully.');
     }
+
 
     public function return($id)
     {

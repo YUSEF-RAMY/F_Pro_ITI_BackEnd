@@ -19,7 +19,7 @@ class BookFactory extends Factory
         return [
             'title' => $this->faker->sentence(3),
             'author' => $this->faker->name(),
-            'imagePath' => 'default.jpg',
+            'imagePath' => '/storage/default-1.jpg',
             'description' => $this->faker->paragraph(),
             'published_year' => $this->faker->year(),
             'quantity' => $this->faker->numberBetween(1, 100),
