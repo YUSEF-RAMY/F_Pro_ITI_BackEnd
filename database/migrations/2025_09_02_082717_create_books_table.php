@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('title');
             $table->string('author')->nullable();
+            $table->text('imagePath')->nullable();
             $table->text('description')->nullable();
             $table->year('published_year')->nullable();
             $table->integer('quantity')->default(1);
