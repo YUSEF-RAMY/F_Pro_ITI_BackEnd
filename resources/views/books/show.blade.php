@@ -47,7 +47,6 @@
                                 class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-semibold text-white bg-yellow-500 rounded-xl hover:bg-yellow-600 shadow transition">
                                 Edit
                             </a>
-                        @endif
                         </a>
 
                         <!-- Delete -->
@@ -57,6 +56,14 @@
                             <button type="submit"
                                 class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-semibold text-white bg-red-600 rounded-xl hover:bg-red-700 shadow transition">
                                 Delete
+                            </button>
+                        </form>
+                        @endif
+                        <form action="{{ route('borrows.store', $book->id) }}" method="POST" class="flex-1">
+                            @csrf
+                            <button type="submit"
+                                class="w-full inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-semibold text-white bg-blue-600 rounded-xl hover:bg-blue-700 shadow transition">
+                                Borrow
                             </button>
                         </form>
                     </div>

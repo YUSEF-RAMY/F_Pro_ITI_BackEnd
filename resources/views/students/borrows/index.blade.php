@@ -5,7 +5,7 @@
         @if($borrows->isEmpty())
             <div class="text-gray-500 text-center">لم تقم باستعارة أي كتاب بعد.</div>
         @else
-            <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+            <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
                 @foreach ($borrows as $borrow)
                     @php $book = $borrow->book; @endphp
                     @if($book)
@@ -15,18 +15,28 @@
                                 alt="{{ $book->title }}"
                                 class="w-full h-48 object-cover transform transition duration-500 hover:scale-110 hover:rotate-2">
                         </div>
-                        <div class="p-5 flex flex-col justify-between h-48">
+                        <div class="p-5 flex flex-col justify-between ">
                             <div>
                                 <h2 class="text-lg font-bold text-gray-900 truncate">{{ $book->title }}</h2>
                                 <p class="text-sm text-gray-500 mb-4">{{ $book->author }}</p>
-                                <p class="text-xs text-gray-400">تاريخ الاستعارة: {{ $borrow->borrow_date ? \Carbon\Carbon::parse($borrow->borrow_date)->format('Y-m-d') : $borrow->created_at->format('Y-m-d') }}</p>
+                                <p class=""><strong>Borrowed at:</strong>{{ $borrow->borrow_date ? \Carbon\Carbon::parse($borrow->borrow_date)->format('Y-m-d') : $borrow->created_at->format('Y-m-d') }}</p>
+                        <p><strong>Returned at:</strong> {{ $borrow->return_date ? \Carbon\Carbon::parse($borrow->return_date)->format('Y-m-d') : 'Not yet' }}</p>
+                                <p><strong>Status:</strong> {{ $borrow->status }}</p>
                             </div>
-                            <div class="flex gap-3 mt-auto">
+                            <div class="flex gap-3 mt-2">
                                 <a href="{{ route('books.show', $book->id) }}"
                                     class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">
-                                    تفاصيل الكتاب
+                                    Show details
                                 </a>
                             </div>
+                            <form action="{{ route('borrows.return', $borrow->id) }}" method="POST" class="flex-1">
+                                @csrf
+                                <button type="submit"
+                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-red-600 hover:bg-red-700 shadow transition">
+                                    return
+                                            </button>
+                                        </form>
+                            
                         </div>
                     </div>
                     @endif

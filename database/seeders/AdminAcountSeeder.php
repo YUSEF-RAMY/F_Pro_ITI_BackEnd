@@ -18,6 +18,9 @@ class AdminAcountSeeder extends Seeder
             'email' => 'admin@admin.com',
             'password' => bcrypt('admin'),
             'role' => 'admin',
+            'phone' => '01000',
+            'imagePath' => 'profile_images/user-1.jpeg',
+            'address' => 'Admin St',
         ]);
     }
 }
