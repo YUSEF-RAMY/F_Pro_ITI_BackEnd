@@ -5,6 +5,7 @@ This project is a **Book Management System** built with **Laravel**, allowing st
 ---
 
 ## 🚀 Features
+
 - User authentication (Students + Admin).
 - Upload profile picture for users.
 - Book management (add, edit, delete).
@@ -15,6 +16,8 @@ This project is a **Book Management System** built with **Laravel**, allowing st
   - Students can only see their currently borrowed books.
   - Admin can see all borrow and return records.
 
+---
+
 - Admin Module Features
  - Admin Dashboard
   - Admin can see (Borrowed books - All Books - All User )
@@ -23,6 +26,8 @@ This project is a **Book Management System** built with **Laravel**, allowing st
   - Admin can also view student details
   - Admin can update their own profile.
   - Authorization is applied so only the admin can perform these tasks.
+
+---
 
 - Students Module features
  - Student Dashboard
@@ -33,8 +38,6 @@ This project is a **Book Management System** built with **Laravel**, allowing st
    - (they can see the books they borrowed before   and   - they can return it back to the shelf)
   - Students can update their own profile.
   - Students can view the borrowed book and book return date-time
-
---
 
 ---
 
@@ -102,6 +105,8 @@ This project was developed with passion and teamwork as part of our ITI final tr
 We hope this system helps in simplifying the process of managing libraries and inspires others to build more educational solutions.  
 
 Thank you for checking out our work! 🙌  
+
+* * *
 
 
 
