@@ -41,28 +41,37 @@
 		<aside id="default-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
 			<div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
 				<div class="mb-6 text-center">
-					<h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">RY-Booking</h1>
+					<a href="{{ route('dashboard') }}"><h1 class="text-2xl font-bold text-gray-800 dark:text-gray-100">RY-Booking</h1></a>
 				</div>
 				<ul class="space-y-2 font-medium">
+                    <li>
+						<a href="{{ route('profile.index') }}" class="flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200
+							hover:bg-blue-100 dark:hover:bg-blue-900 transition group">
+							<i class="fa-solid fa-user text-blue-500 text-lg"></i>
+							<span class="ms-3"> Welcome : {{ Auth::user()->name }}</span>
+						</a>
+					</li>
 					<li>
 						<a href="{{ route('dashboard') }}" class="flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200
-								                    hover:bg-blue-100 dark:hover:bg-blue-900 transition group">
+							hover:bg-blue-100 dark:hover:bg-blue-900 transition group">
 							<i class="fa-solid fa-house text-blue-500 text-lg"></i>
 							<span class="ms-3">Main Page</span>
 						</a>
 					</li>
-
-					<li>
+                    @if (Auth::check() && Auth::user()->role === 'admin')
+                        <li>
 						<a href="{{ route('students.index') }}" class="flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200
-								                    hover:bg-purple-100 dark:hover:bg-purple-900 transition group">
+								hover:bg-purple-100 dark:hover:bg-purple-900 transition group">
 							<i class="fa-solid fa-user-graduate text-purple-500 text-lg"></i>
 							<span class="ms-3">Students</span>
 						</a>
 					</li>
+                    @endif
+					
 
 					<li>
 						<a href="{{ route('books.index') }}" class="flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200
-								                    hover:bg-emerald-100 dark:hover:bg-emerald-900 transition group">
+							hover:bg-emerald-100 dark:hover:bg-emerald-900 transition group">
 							<i class="fa-solid fa-book text-emerald-500 text-lg"></i>
 							<span class="ms-3">Books</span>
 						</a>
@@ -70,7 +79,7 @@
 
 					<li>
 						<a href="{{ route('borrows.index') }}" class="flex items-center p-2 rounded-lg text-gray-700 dark:text-gray-200
-								                    hover:bg-amber-100 dark:hover:bg-amber-900 transition group">
+								hover:bg-amber-100 dark:hover:bg-amber-900 transition group">
 							<i class="fa-solid fa-handshake text-amber-500 text-lg"></i>
 							<span class="ms-3">Borrows</span>
 						</a>
@@ -80,7 +89,7 @@
 						<form method="POST" action="{{ route('logout') }}">
 							@csrf
 							<button type="submit" class="flex items-center w-full p-2 rounded-lg text-gray-700 dark:text-gray-200
-									            hover:bg-red-100 dark:hover:bg-red-900 transition group">
+									hover:bg-red-100 dark:hover:bg-red-900 transition group">
 								<i class="fa-solid fa-sign-out-alt text-red-500 text-lg"></i>
 								<span class="ms-3">Logout</span>
 							</button>
@@ -98,6 +107,7 @@
 			</div>
 		</div>
 
+<script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
 		<script src="{{ asset('js/flowbite.js') }}"></script>
 		<script src="{{ asset('js/browser@4.js') }}"></script>

@@ -4,10 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\BookController;
 use App\Http\Controllers\Student\BorrowController;
 use App\Http\Controllers\StudentController;
-use Illuminate\Support\Facades\Route;
-use App\Models\Student;
 use App\Models\Book;
 use App\Models\Borrow;
+use App\Models\Student;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('auth.login');
@@ -15,14 +17,16 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     return view('dashboard', [
-        'totalStudents' => Student::count(),
+        'redeemedBooks' => Borrow::where('status', 'returned')->count(),
+        'totalStudents' => User::count(),
         'totalBooks' => Book::count(),
-        'totalBorrows' => Borrow::count(),
+        'totalBorrows' => Borrow::where('status', 'borrowed')->count(),
     ]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

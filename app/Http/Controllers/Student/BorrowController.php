@@ -13,7 +13,11 @@ class BorrowController extends Controller
 {
     public function index()
     {
-       $borrows = Borrow::with('book', 'user')->get();
+        if(Auth::user()->role === 'admin') {
+            $borrows = Borrow::with('book', 'user')->get();
+        }else{
+            $borrows = Borrow::with('book')->where('user_id', Auth::id())->where('status', 'borrowed')->get();
+        }
         return view('students.borrows.index', compact('borrows'));
     }
 
@@ -38,12 +42,13 @@ class BorrowController extends Controller
 
     public function return($id)
     {
+        $bookquantity = Borrow::where('id', $id)->value('book_id');
+        Book::where('id', $bookquantity)->increment('quantity');
         $borrow = Borrow::findOrFail($id);
         $borrow->update([
             'return_date' => now(),
             'status' => 'returned',
         ]);
-
         return redirect()->route('borrows.index')->with('success', 'Book returned successfully.');
     }
 }

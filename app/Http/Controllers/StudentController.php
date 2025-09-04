@@ -3,15 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 
 class StudentController extends Controller
 {
     public function index()
     {
-        $students = Student::latest()->get();
-        return view('students.index', compact('students'));
+        $users = User::latest()->get();
+        return view('students.index', compact('users'));
     }
 
     public function create()
@@ -26,6 +28,7 @@ class StudentController extends Controller
             'email' => 'required|email|unique:students,email',
             'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
+            'password' => ['required', 'confirmed', Password::defaults()],
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -33,28 +36,29 @@ class StudentController extends Controller
             $data['imagePath'] = $request->file('image')->store('students', 'public');
         }
 
-        Student::create($data);
+        User::create($data);
 
         return redirect()->route('students.index')->with('success', 'Student added successfully');
     }
 
-    public function show(Student $student)
+    public function show(User $student)
     {
         return view('students.show', compact('student'));
     }
 
-    public function edit(Student $student)
+    public function edit(User $student)
     {
         return view('students.edit', compact('student'));
     }
 
-    public function update(Request $request, Student $student)
+    public function update(Request $request, User $student)
     {
         $data = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:students,email,' . $student->id,
             'phone' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
+            'password' => ['required', 'confirmed', Password::defaults()],
             'image' => 'nullable|image|max:2048',
         ]);
 
@@ -67,10 +71,10 @@ class StudentController extends Controller
 
         $student->update($data);
 
-        return redirect()->route('students.index')->with('success', 'Student updated successfully');
+        return redirect()->route('profile.index')->with('success', 'Student updated successfully');
     }
 
-    public function destroy(Student $student)
+    public function destroy(User $student)
     {
         if ($student->imagePath) {
             Storage::disk('public')->delete($student->imagePath);
@@ -78,6 +82,6 @@ class StudentController extends Controller
 
         $student->delete();
 
-        return redirect()->route('students.index')->with('success', 'Student deleted successfully');
+        return redirect()->route('login')->with('success', 'Student deleted successfully');
     }
 }
