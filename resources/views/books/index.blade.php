@@ -3,12 +3,15 @@
         <!-- Header -->
         <div class="flex justify-between items-center mb-10">
             <h1 class="text-3xl font-extrabold text-gray-900">📚 All Books</h1>
-            <a href="{{ route('books.create') }}" class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white
+            @if (Auth::check() && Auth::user()->role === 'admin')
+                <a href="{{ route('books.create') }}"
+                    class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white
           bg-blue-600 rounded-lg shadow hover:bg-blue-700
           focus:outline-none focus:ring-2 focus:ring-blue-400
           transition">
-                + Add Book
-            </a>
+                    + Add Book
+                </a>
+            @endif
 
         </div>
 
@@ -22,7 +25,7 @@
                     <div class="overflow-hidden">
                         <img src="{{ $book->imagePath ? asset('storage/' . $book->imagePath) : asset('images/default-1.jpg') }}"
                             alt="{{ $book->title }}"
-                            class="w-full h-60 object-cover transform transition duration-500 hover:scale-110 hover:rotate-2">
+                            class="w-full h-48 object-cover transform transition duration-500 hover:scale-110 hover:rotate-2">
                     </div>
 
                     <!-- Book Content -->
@@ -39,22 +42,32 @@
                                 class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">
                                 Show
                             </a>
-
-                            <!-- Edit Button -->
-                            <a href="{{ route('books.edit', $book->id) }}"
-                                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-yellow-500 hover:bg-yellow-600 shadow transition">
-                                Edit
-                            </a>
-
-                            <!-- Delete Button -->
-                            <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="flex-1">
+                            {{-- borrow book  --}}
+                            {{-- <a href="{{ route('borrows.store', $book->id) }}"
+                                class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">
+                                Borrow
+                            </a> --}}
+                            <form action="{{ route('borrows.store', $book->id) }}" method="POST">
                                 @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                    class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-red-600 hover:bg-red-700 shadow transition">
-                                    Delete
-                                </button>
+                                <button type="submit" class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">Borrow</button>
                             </form>
+                            @if (Auth::check() && Auth::user()->role === 'admin')
+                                <!-- Edit Button -->
+                                <a href="{{ route('books.edit', $book->id) }}"
+                                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-yellow-500 hover:bg-yellow-600 shadow transition">
+                                    Edit
+                                </a>
+
+                                <!-- Delete Button -->
+                                <form action="{{ route('books.destroy', $book->id) }}" method="POST" class="flex-1">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-red-600 hover:bg-red-700 shadow transition">
+                                        Delete
+                                    </button>
+                                </form>
+                            @endif
                         </div>
 
                     </div>

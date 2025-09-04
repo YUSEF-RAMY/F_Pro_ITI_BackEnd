@@ -30,10 +30,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class);
     Route::post('/books/{book}/borrow', [BorrowController::class, 'store'])->name('borrows.store');
-    Route::get('/my-borrows', [BorrowController::class, 'index'])->name('borrows.index');
+    // Route::get('/my-borrows', [BorrowController::class, 'index'])->name('borrows.index');
 });
 
 Route::resource('students', StudentController::class);
 
+// borrow book
+Route::get('borrows', [BorrowController::class, 'index'])->name('borrows.index');
+Route::post('borrows/{book}', [BorrowController::class, 'store'])->name('borrows.store');
+Route::post('/borrows/{id}/return', [BorrowController::class, 'return'])->name('borrows.return');
 
 require __DIR__ . '/auth.php';
