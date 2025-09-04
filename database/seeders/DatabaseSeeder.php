@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Book::factory(20)->create();
+        // Book::factory(20)->create();
 
         $this->call([
             AdminAcountSeeder::class,

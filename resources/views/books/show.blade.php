@@ -42,9 +42,12 @@
                     <!-- Action Buttons -->
                     <div class="flex gap-4 mt-8">
                         <!-- Edit -->
-                        <a href="{{ route('books.edit', $book->id) }}"
-                            class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-semibold text-white bg-yellow-500 rounded-xl hover:bg-yellow-600 shadow transition">
-                            Edit
+                        @if (Auth::check() && Auth::user()->role === 'admin')
+                            <a href="{{ route('books.edit', $book->id) }}"
+                                class="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 text-base font-semibold text-white bg-yellow-500 rounded-xl hover:bg-yellow-600 shadow transition">
+                                Edit
+                            </a>
+                        @endif
                         </a>
 
                         <!-- Delete -->
