@@ -20,6 +20,15 @@
 		<!-- SweetAlert2 -->
 		<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+		 {{-- bootstrap  --}}
+    <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
+
+		<!-- jQuery -->
+		 <link rel="stylesheet" href="{{ asset('css/dataTables.dataTables.min.css') }}">
+    <script src="{{ asset('js/dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 

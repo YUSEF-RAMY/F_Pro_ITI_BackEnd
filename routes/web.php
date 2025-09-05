@@ -8,7 +8,9 @@ use App\Models\Book;
 use App\Models\Borrow;
 use App\Models\Student;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 
 Route::get('/', function () {
@@ -16,12 +18,41 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard', [
-        'redeemedBooks' => Borrow::where('status', 'returned')->count(),
-        'totalStudents' => User::count(),
-        'totalBooks' => Book::count(),
-        'totalBorrows' => Borrow::where('status', 'borrowed')->count(),
-    ]);
+    $user = Auth::user();
+
+    if ($user->role === 'admin') {
+        // بيانات خاصة بالادمن
+        $borrows = Borrow::with(['user', 'book'])->get();
+        $count = Borrow::count();
+
+        return view('dashboard', [
+            'count' => $count,
+            'borrows' => $borrows,
+            'redeemedBooks' => Borrow::where('status', 'returned')->count(),
+            'totalStudents' => User::count(),
+            'totalBorrows' => Borrow::where('status', 'borrowed')->count(),
+            'totalBooks' => Book::count(),
+        ]);
+    } else {
+        // بيانات خاصة باليوزر العادي
+        $borrows = Borrow::with(['book'])
+            ->where('user_id', $user->id)
+            ->get();
+        $count = Borrow::where('user_id', $user->id)->count();
+
+        return view('dashboard', [
+            'count' => $count,
+            'borrows' => $borrows,
+            'redeemedBooks' => Borrow::where('user_id', $user->id)
+                                    ->where('status', 'returned')
+                                    ->count(),
+            'totalStudents' => null, 
+            'totalBooks' => Book::count(),    
+            'totalBorrows' => Borrow::where('user_id', $user->id)
+                                    ->where('status', 'borrowed')
+                                    ->count(),
+        ]);
+    }
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -44,4 +75,6 @@ Route::get('borrows', [BorrowController::class, 'index'])->name('borrows.index')
 Route::post('borrows/{book}', [BorrowController::class, 'store'])->name('borrows.store');
 Route::post('/borrows/{id}/return', [BorrowController::class, 'return'])->name('borrows.return');
 
+// Admin route to view books
+Route::get('/admin/returned-books', [BorrowController::class, 'returnedBooks'])->name('admin.returnedBooks')->middleware('admin');
 require __DIR__ . '/auth.php';
