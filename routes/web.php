@@ -46,8 +46,8 @@ Route::get('/dashboard', function () {
             'redeemedBooks' => Borrow::where('user_id', $user->id)
                                     ->where('status', 'returned')
                                     ->count(),
-            'totalStudents' => null, // مش هتظهر لليوزر
-            'totalBooks' => Book::count(),    // مش هتظهر لليوزر
+            'totalStudents' => null, 
+            'totalBooks' => Book::count(),    
             'totalBorrows' => Borrow::where('user_id', $user->id)
                                     ->where('status', 'borrowed')
                                     ->count(),
