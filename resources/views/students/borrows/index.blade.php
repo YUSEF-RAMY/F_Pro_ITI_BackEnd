@@ -20,7 +20,6 @@
                                 <h2 class="text-lg font-bold text-gray-900 truncate">{{ $book->title }}</h2>
                                 <p class="text-sm text-gray-500 mb-4">{{ $book->author }}</p>
                                 <p class=""><strong>Borrowed at:</strong>{{ $borrow->borrow_date ? \Carbon\Carbon::parse($borrow->borrow_date)->format('Y-m-d') : $borrow->created_at->format('Y-m-d') }}</p>
-                        <p><strong>Returned at:</strong> {{ $borrow->return_date ? \Carbon\Carbon::parse($borrow->return_date)->format('Y-m-d') : 'Not yet' }}</p>
                                 <p><strong>Status:</strong> {{ $borrow->status }}</p>
                             </div>
                             <div class="flex gap-3 mt-2">

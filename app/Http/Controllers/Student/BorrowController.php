@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Borrow;
-use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class BorrowController extends Controller
@@ -51,4 +49,15 @@ class BorrowController extends Controller
         ]);
         return redirect()->route('borrows.index')->with('success', 'Book returned successfully.');
     }
+
+    // Admin function to view all returned books
+    public function returnedBooks()
+    {
+        $totalBorrows = Borrow::where('status', 'borrowed')->count();
+        $redeemedBooks = Borrow::where('status', 'returned')->count();
+        $returnedBooks = Borrow::with('book', 'user')->get();
+        return view('admin.returnedbooks', compact('returnedBooks', 'totalBorrows', 'redeemedBooks'));
+    }
+
+    
 }
