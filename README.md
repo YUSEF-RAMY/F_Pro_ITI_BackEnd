@@ -56,7 +56,7 @@ This project is a **Book Management System** built with **Laravel**, allowing st
 This project was developed as the **final project at ITI training** by the team:
 
 - Eng: **Yusef Ramy Saber**  
-- Eng: **Ali Alaa Ramadan**
+- Eng: **Ramadan Alaa Elddin**
 
 ---
 
