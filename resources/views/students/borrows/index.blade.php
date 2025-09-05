@@ -1,9 +1,9 @@
 <x-app-layout>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 class="text-3xl font-extrabold text-gray-900 mb-8">📚 الكتب التي استعرتها</h1>
+        <h1 class="text-3xl font-extrabold text-gray-900 mb-8">📚 Borrowed Books</h1>
 
         @if($borrows->isEmpty())
-            <div class="text-gray-500 text-center">لم تقم باستعارة أي كتاب بعد.</div>
+            <div class="text-gray-500 text-center">You haven't borrowed any books yet.</div>
         @else
             <div class="grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2">
                 @foreach ($borrows as $borrow)
@@ -22,7 +22,7 @@
                                 <p class=""><strong>Borrowed at:</strong>{{ $borrow->borrow_date ? \Carbon\Carbon::parse($borrow->borrow_date)->format('Y-m-d') : $borrow->created_at->format('Y-m-d') }}</p>
                                 <p><strong>Status:</strong> {{ $borrow->status }}</p>
                             </div>
-                            <div class="flex gap-3 mt-2">
+                            <div class="flex gap-3 my-4">
                                 <a href="{{ route('books.show', $book->id) }}"
                                     class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">
                                     Show details

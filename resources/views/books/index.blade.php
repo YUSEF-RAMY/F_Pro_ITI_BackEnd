@@ -45,12 +45,14 @@
                                 class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">
                                 Show
                             </a>
-                           
-                            <form action="{{ route('borrows.store', $book->id) }}" method="POST">
-                                @csrf
-                                <button type="submit"
-                                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">Borrow</button>
-                            </form>
+                           @if (Auth::check() && Auth::user()->role === 'student' && $book->quantity > 0)
+                            
+                           <form action="{{ route('borrows.store', $book->id) }}" method="POST">
+                               @csrf
+                               <button type="submit"
+                                   class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-semibold text-white rounded-xl bg-indigo-600 hover:bg-indigo-700 shadow transition">Borrow</button>
+                           </form>
+                           @endif
                             @if (Auth::check() && Auth::user()->role === 'admin')
                                 <!-- Edit Button -->
                                 <a href="{{ route('books.edit', $book->id) }}"
